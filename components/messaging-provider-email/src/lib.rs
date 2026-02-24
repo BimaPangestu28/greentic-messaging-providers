@@ -102,6 +102,15 @@ const I18N_KEYS: &[&str] = &[
     "email.qa.setup.tls_mode",
     "email.qa.setup.default_to_address",
     "email.qa.setup.password",
+    // Flow-related i18n keys
+    "email.flow.default.title",
+    "email.flow.default.config_summary",
+    "email.flow.update.title",
+    "email.flow.update.collect",
+    "email.flow.update.complete",
+    "email.flow.remove.title",
+    "email.flow.remove.check_state",
+    "email.flow.remove.complete",
 ];
 
 #[derive(Debug, Deserialize)]

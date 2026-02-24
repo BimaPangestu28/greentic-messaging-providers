@@ -81,6 +81,15 @@ const I18N_KEYS: &[&str] = &[
     "webchat.qa.setup.route",
     "webchat.qa.setup.tenant_channel_id",
     "webchat.qa.setup.base_url",
+    // Flow-related i18n keys
+    "webchat.flow.default.title",
+    "webchat.flow.default.config_summary",
+    "webchat.flow.update.title",
+    "webchat.flow.update.collect",
+    "webchat.flow.update.complete",
+    "webchat.flow.remove.title",
+    "webchat.flow.remove.check_state",
+    "webchat.flow.remove.complete",
 ];
 
 #[derive(Debug, Deserialize)]

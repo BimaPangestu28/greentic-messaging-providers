@@ -82,6 +82,15 @@ const I18N_KEYS: &[&str] = &[
     "webex.qa.setup.default_to_person_email",
     "webex.qa.setup.api_base_url",
     "webex.qa.setup.bot_token",
+    // Flow-related i18n keys
+    "webex.flow.default.title",
+    "webex.flow.default.config_summary",
+    "webex.flow.update.title",
+    "webex.flow.update.collect",
+    "webex.flow.update.complete",
+    "webex.flow.remove.title",
+    "webex.flow.remove.check_state",
+    "webex.flow.remove.complete",
 ];
 
 #[derive(Debug, Deserialize, Default)]

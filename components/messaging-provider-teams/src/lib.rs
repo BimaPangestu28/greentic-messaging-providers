@@ -111,6 +111,15 @@ const I18N_KEYS: &[&str] = &[
     "teams.qa.setup.refresh_token",
     "teams.qa.setup.team_id",
     "teams.qa.setup.channel_id",
+    // Flow-related i18n keys
+    "teams.flow.default.title",
+    "teams.flow.default.config_summary",
+    "teams.flow.update.title",
+    "teams.flow.update.collect",
+    "teams.flow.update.complete",
+    "teams.flow.remove.title",
+    "teams.flow.remove.check_state",
+    "teams.flow.remove.complete",
 ];
 
 #[derive(Debug, Deserialize)]

@@ -85,6 +85,15 @@ const I18N_KEYS: &[&str] = &[
     "whatsapp.qa.setup.api_base_url",
     "whatsapp.qa.setup.api_version",
     "whatsapp.qa.setup.token",
+    // Flow-related i18n keys
+    "whatsapp.flow.default.title",
+    "whatsapp.flow.default.config_summary",
+    "whatsapp.flow.update.title",
+    "whatsapp.flow.update.collect",
+    "whatsapp.flow.update.complete",
+    "whatsapp.flow.remove.title",
+    "whatsapp.flow.remove.check_state",
+    "whatsapp.flow.remove.complete",
 ];
 
 #[derive(Debug, Deserialize)]

@@ -78,6 +78,15 @@ const I18N_KEYS: &[&str] = &[
     "slack.qa.setup.api_base_url",
     "slack.qa.setup.bot_token",
     "slack.qa.setup.default_channel",
+    // Flow-related i18n keys
+    "slack.flow.default.title",
+    "slack.flow.default.config_summary",
+    "slack.flow.update.title",
+    "slack.flow.update.collect",
+    "slack.flow.update.complete",
+    "slack.flow.remove.title",
+    "slack.flow.remove.check_state",
+    "slack.flow.remove.complete",
 ];
 
 #[derive(Debug, Deserialize)]

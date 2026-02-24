@@ -78,6 +78,15 @@ const I18N_KEYS: &[&str] = &[
     "telegram.qa.setup.default_chat_id",
     "telegram.qa.setup.api_base_url",
     "telegram.qa.setup.bot_token",
+    // Flow-related i18n keys
+    "telegram.flow.default.title",
+    "telegram.flow.default.config_summary",
+    "telegram.flow.update.title",
+    "telegram.flow.update.collect",
+    "telegram.flow.update.complete",
+    "telegram.flow.remove.title",
+    "telegram.flow.remove.check_state",
+    "telegram.flow.remove.complete",
 ];
 
 #[derive(Debug, Deserialize)]
