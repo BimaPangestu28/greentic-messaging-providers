@@ -1,0 +1,33 @@
+pack_id: state-redis
+version: 0.4.0
+kind: capability
+publisher: Greentic
+name: "Redis State Provider"
+description: "Persistent key-value state provider backed by Redis. Suitable for production environments with distributed state requirements."
+
+components:
+  - id: state-provider-redis
+    version: 0.4.0
+    world: greentic:component/component-v0-v6-v0
+    wasm: components/state-provider-redis.wasm
+
+extensions:
+  greentic.ext.capabilities.v1:
+    kind: greentic.ext.capabilities.v1
+    version: 1.0.0
+    inline:
+      schema_version: 1
+      offers:
+        - offer_id: state.redis.kv.01
+          cap_id: greentic.cap.state.kv.v1
+          version: v1
+          provider:
+            component_ref: state-provider-redis
+            op: state.dispatch
+          priority: 50
+          requires_setup: true
+          setup:
+            qa_ref: qa/state-redis-setup.json
+          metadata:
+            ephemeral: false
+            backend: redis
