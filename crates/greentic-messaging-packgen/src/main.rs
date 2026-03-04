@@ -2489,7 +2489,10 @@ fn generate_flows(
                 )?;
 
                 // Step 3: Summary
-                let summary_text = format!("{} removal complete. Provider has been safely removed.", spec.provider.provider_type);
+                let summary_text = format!(
+                    "{} removal complete. Provider has been safely removed.",
+                    spec.provider.provider_type
+                );
                 let summary_payload = merge_payload(
                     templates_example.clone(),
                     json!({

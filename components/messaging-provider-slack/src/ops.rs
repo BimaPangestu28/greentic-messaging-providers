@@ -212,21 +212,21 @@ pub(crate) fn ingest_http(input_json: &[u8]) -> Vec<u8> {
     // Slack interactive payloads (button clicks) come as URL-encoded `payload=<json>`
     // or directly as JSON with `type: "block_actions"`.
     // Also check for URL-encoded form body.
-    let interactive_payload = if body_val.get("type").and_then(Value::as_str) == Some("block_actions")
-    {
-        Some(body_val.clone())
-    } else {
-        // Try URL-encoded: body may be "payload=%7B..." raw text.
-        let body_str = String::from_utf8(body_bytes.clone()).unwrap_or_default();
-        if body_str.starts_with("payload=") {
-            let decoded = urldecode(&body_str[8..]);
-            serde_json::from_str::<Value>(&decoded)
-                .ok()
-                .filter(|v| v.get("type").and_then(Value::as_str) == Some("block_actions"))
+    let interactive_payload =
+        if body_val.get("type").and_then(Value::as_str) == Some("block_actions") {
+            Some(body_val.clone())
         } else {
-            None
-        }
-    };
+            // Try URL-encoded: body may be "payload=%7B..." raw text.
+            let body_str = String::from_utf8(body_bytes.clone()).unwrap_or_default();
+            if body_str.starts_with("payload=") {
+                let decoded = urldecode(&body_str[8..]);
+                serde_json::from_str::<Value>(&decoded)
+                    .ok()
+                    .filter(|v| v.get("type").and_then(Value::as_str) == Some("block_actions"))
+            } else {
+                None
+            }
+        };
 
     if let Some(interactive) = interactive_payload {
         // Handle block_actions — Slack button click (AC Action.Submit mapped to Slack button).
@@ -307,8 +307,7 @@ pub(crate) fn ingest_http(input_json: &[u8]) -> Vec<u8> {
             "event": interactive,
             "channel": channel,
         });
-        let normalized_bytes =
-            serde_json::to_vec(&normalized).unwrap_or_else(|_| b"{}".to_vec());
+        let normalized_bytes = serde_json::to_vec(&normalized).unwrap_or_else(|_| b"{}".to_vec());
         let out = HttpOutV1 {
             status: 200,
             headers: Vec::new(),
@@ -1052,7 +1051,13 @@ fn ac_element_to_blocks(element: &Value, blocks: &mut Vec<Value>, actions: &mut 
             let has_style = element
                 .get("style")
                 .and_then(Value::as_str)
-                .is_some_and(|s| s == "accent" || s == "emphasis" || s == "good" || s == "attention" || s == "warning");
+                .is_some_and(|s| {
+                    s == "accent"
+                        || s == "emphasis"
+                        || s == "good"
+                        || s == "attention"
+                        || s == "warning"
+                });
 
             // Add divider before styled containers for visual separation.
             if has_style && !blocks.is_empty() {
@@ -1077,7 +1082,9 @@ fn ac_element_to_blocks(element: &Value, blocks: &mut Vec<Value>, actions: &mut 
 
         "Input.Text" => {
             // Show input placeholder as context hint.
-            let label = element.get("label").and_then(Value::as_str)
+            let label = element
+                .get("label")
+                .and_then(Value::as_str)
                 .or_else(|| element.get("placeholder").and_then(Value::as_str));
             if let Some(label) = label {
                 blocks.push(json!({
@@ -1126,10 +1133,10 @@ fn ac_element_to_blocks(element: &Value, blocks: &mut Vec<Value>, actions: &mut 
                         .and_then(Value::as_bool)
                         .unwrap_or(false);
                     if is_multi {
-                        select.as_object_mut().unwrap().insert(
-                            "type".into(),
-                            Value::String("multi_static_select".into()),
-                        );
+                        select
+                            .as_object_mut()
+                            .unwrap()
+                            .insert("type".into(), Value::String("multi_static_select".into()));
                     }
                     // Wrap in a section block with accessory
                     let label = element
@@ -1246,10 +1253,7 @@ fn collect_select_action(element: &Value, actions: &mut Vec<Value>) {
         Some(sa) => sa,
         None => return,
     };
-    let atype = sa
-        .get("type")
-        .and_then(Value::as_str)
-        .unwrap_or_default();
+    let atype = sa.get("type").and_then(Value::as_str).unwrap_or_default();
     if atype != "Action.Submit" && atype != "Action.Execute" {
         return;
     }

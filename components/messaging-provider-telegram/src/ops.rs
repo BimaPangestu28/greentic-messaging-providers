@@ -485,7 +485,10 @@ pub(crate) fn ingest_http(input_json: &[u8]) -> Vec<u8> {
         "telegram ingest_http: has_callback={} has_message={} keys={:?}",
         has_callback,
         has_message,
-        body_val.as_object().map(|o| o.keys().collect::<Vec<_>>()).unwrap_or_default()
+        body_val
+            .as_object()
+            .map(|o| o.keys().collect::<Vec<_>>())
+            .unwrap_or_default()
     );
     if let Some(callback) = body_val.get("callback_query") {
         let callback_id = callback
@@ -500,7 +503,10 @@ pub(crate) fn ingest_http(input_json: &[u8]) -> Vec<u8> {
             .get("data")
             .and_then(|v| v.as_str())
             .unwrap_or_default();
-        eprintln!("telegram callback_query: id={} data_str={}", callback_id, data_str);
+        eprintln!(
+            "telegram callback_query: id={} data_str={}",
+            callback_id, data_str
+        );
 
         // Try to parse callback data as JSON (AC Action.Submit serializes data as JSON).
         let (route_to_card, card_id, action_text) =
@@ -528,12 +534,18 @@ pub(crate) fn ingest_http(input_json: &[u8]) -> Vec<u8> {
                 };
                 (rtc, cid, text)
             } else {
-                (String::new(), String::new(), format!("[callback:{data_str}]"))
+                (
+                    String::new(),
+                    String::new(),
+                    format!("[callback:{data_str}]"),
+                )
             };
 
         let mut envelope = build_telegram_envelope(action_text, chat_id.clone(), from.clone());
         if !route_to_card.is_empty() {
-            envelope.metadata.insert("routeToCardId".into(), route_to_card);
+            envelope
+                .metadata
+                .insert("routeToCardId".into(), route_to_card);
         }
         if !card_id.is_empty() {
             envelope.metadata.insert("cardId".into(), card_id);
@@ -552,8 +564,7 @@ pub(crate) fn ingest_http(input_json: &[u8]) -> Vec<u8> {
             "chat_id": chat_id,
             "from": from,
         });
-        let normalized_bytes =
-            serde_json::to_vec(&normalized).unwrap_or_else(|_| b"{}".to_vec());
+        let normalized_bytes = serde_json::to_vec(&normalized).unwrap_or_else(|_| b"{}".to_vec());
         let out = HttpOutV1 {
             status: 200,
             headers: Vec::new(),
@@ -1383,14 +1394,20 @@ fn build_inline_keyboard_from_metadata(
             let has_data = action.get("data").is_some();
             let cb = if let Some(data) = action.get("data") {
                 let serialized = data.to_string();
-                eprintln!("tg build_keyboard: title={title} data_len={} data={serialized}", serialized.len());
+                eprintln!(
+                    "tg build_keyboard: title={title} data_len={} data={serialized}",
+                    serialized.len()
+                );
                 if serialized.len() <= 64 {
                     serialized
                 } else {
                     // Too large — extract only routeToCardId for compact callback_data.
                     let compact = compact_callback_data(data);
                     let compact_str = compact.to_string();
-                    eprintln!("tg build_keyboard: compact_len={} compact={compact_str}", compact_str.len());
+                    eprintln!(
+                        "tg build_keyboard: compact_len={} compact={compact_str}",
+                        compact_str.len()
+                    );
                     if compact_str.len() <= 64 {
                         compact_str
                     } else {
@@ -1576,7 +1593,10 @@ pub(crate) fn setup_webhook(input_json: &[u8]) -> Vec<u8> {
                 .unwrap_or(Value::Null);
 
             if (200..300).contains(&resp.status) {
-                let tg_ok = resp_body.get("ok").and_then(Value::as_bool).unwrap_or(false);
+                let tg_ok = resp_body
+                    .get("ok")
+                    .and_then(Value::as_bool)
+                    .unwrap_or(false);
                 let description = resp_body
                     .get("description")
                     .and_then(Value::as_str)

@@ -229,11 +229,7 @@ fn build_describe_payload() -> DescribePayload {
 }
 
 const SETUP_QUESTIONS: &[provider_common::helpers::QaQuestionDef] = &[
-    (
-        "max_entries",
-        "state.memory.qa.setup.max_entries",
-        false,
-    ),
+    ("max_entries", "state.memory.qa.setup.max_entries", false),
     (
         "default_ttl_seconds",
         "state.memory.qa.setup.default_ttl_seconds",
@@ -426,10 +422,7 @@ mod tests {
         let out_json: serde_json::Value = decode_cbor(&out).expect("decode apply output");
         assert_eq!(out_json.get("ok"), Some(&serde_json::Value::Bool(true)));
         let config = out_json.get("config").expect("config object");
-        assert_eq!(
-            config.get("max_entries"),
-            Some(&serde_json::json!(5000))
-        );
+        assert_eq!(config.get("max_entries"), Some(&serde_json::json!(5000)));
         assert_eq!(
             config.get("default_ttl_seconds"),
             Some(&serde_json::json!(300))

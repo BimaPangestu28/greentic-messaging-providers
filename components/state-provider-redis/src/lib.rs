@@ -111,10 +111,7 @@ const I18N_PAIRS: &[(&str, &str)] = &[
         "state.redis.schema.config.redis_tls_enabled.description",
         "Enable TLS encryption for Redis connection",
     ),
-    (
-        "state.redis.schema.config.key_prefix.title",
-        "Key Prefix",
-    ),
+    ("state.redis.schema.config.key_prefix.title", "Key Prefix"),
     (
         "state.redis.schema.config.key_prefix.description",
         "Prefix for all Redis keys to avoid collisions (default: greentic)",
@@ -139,18 +136,12 @@ const I18N_PAIRS: &[(&str, &str)] = &[
     ("state.redis.qa.setup.title", "Setup"),
     ("state.redis.qa.upgrade.title", "Upgrade"),
     ("state.redis.qa.remove.title", "Remove"),
-    (
-        "state.redis.qa.setup.redis_url",
-        "Redis connection URL",
-    ),
+    ("state.redis.qa.setup.redis_url", "Redis connection URL"),
     (
         "state.redis.qa.setup.redis_password",
         "Redis password (optional)",
     ),
-    (
-        "state.redis.qa.setup.redis_tls_enabled",
-        "Enable TLS",
-    ),
+    ("state.redis.qa.setup.redis_tls_enabled", "Enable TLS"),
     (
         "state.redis.qa.setup.key_prefix",
         "Key prefix (default: greentic)",
@@ -313,7 +304,11 @@ fn build_describe_payload() -> DescribePayload {
 
 const SETUP_QUESTIONS: &[provider_common::helpers::QaQuestionDef] = &[
     ("redis_url", "state.redis.qa.setup.redis_url", true),
-    ("redis_password", "state.redis.qa.setup.redis_password", false),
+    (
+        "redis_password",
+        "state.redis.qa.setup.redis_password",
+        false,
+    ),
     (
         "redis_tls_enabled",
         "state.redis.qa.setup.redis_tls_enabled",
@@ -613,10 +608,7 @@ mod tests {
             config.get("redis_url"),
             Some(&serde_json::json!("redis://localhost:6379/0"))
         );
-        assert_eq!(
-            config.get("key_prefix"),
-            Some(&serde_json::json!("myapp"))
-        );
+        assert_eq!(config.get("key_prefix"), Some(&serde_json::json!("myapp")));
         assert_eq!(
             config.get("connection_pool_size"),
             Some(&serde_json::json!(10))

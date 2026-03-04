@@ -690,7 +690,9 @@ pub(crate) fn encode_op(input_json: &[u8]) -> Vec<u8> {
             // Fallback: read from secrets store so `demo send` works without --arg.
             use crate::bindings::greentic::secrets_store::secrets_store;
             match secrets_store::get("PHONE_NUMBER_ID") {
-                Ok(Some(bytes)) => String::from_utf8(bytes).ok().filter(|s| !s.trim().is_empty()),
+                Ok(Some(bytes)) => String::from_utf8(bytes)
+                    .ok()
+                    .filter(|s| !s.trim().is_empty()),
                 _ => None,
             }
         })
