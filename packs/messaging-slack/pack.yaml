@@ -54,7 +54,7 @@ extensions:
       schema_version: 1
       offers:
         - offer_id: "messaging-slack-v1"
-          cap_id: "greentic.cap.messaging.v1"
+          cap_id: "greentic.cap.messaging.provider.v1"
           version: "v1"
           provider:
             component_ref: "messaging-provider-slack"

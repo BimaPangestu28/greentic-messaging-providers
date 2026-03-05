@@ -46,7 +46,7 @@ extensions:
     version: 0.4.0
     inline:
       offers:
-      - cap_id: greentic.cap.messaging.v1
+      - cap_id: greentic.cap.messaging.provider.v1
         offer_id: messaging-dummy-v1
         priority: 100
         provider:

@@ -42,7 +42,7 @@ extensions:
       schema_version: 1
       offers:
         - offer_id: "messaging-email-v1"
-          cap_id: "greentic.cap.messaging.v1"
+          cap_id: "greentic.cap.messaging.provider.v1"
           version: "v1"
           provider:
             component_ref: "messaging-provider-email"
