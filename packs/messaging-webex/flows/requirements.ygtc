@@ -1,16 +1,12 @@
----
-# Requirements check flow for messaging-webex provider.
-# Validates that required configuration is in place.
 id: requirements
 title: Webex Requirements Check
 description: Validates Webex messaging provider configuration
-version: "1"
+type: messaging
+start: check_config
 
 nodes:
-  - id: check_config
-    type: component
-    component: messaging-provider-webex
-    op: messaging.configure
-    input: {}
-
-edges: []
+  check_config:
+    messaging-provider-webex:
+      op: messaging.configure
+    routing:
+      - out: true

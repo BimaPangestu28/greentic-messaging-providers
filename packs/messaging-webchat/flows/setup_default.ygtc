@@ -1,16 +1,12 @@
----
-# Default setup flow for messaging-webchat provider.
-# Invoked during QA wizard to configure the messaging provider.
 id: setup_default
 title: Default WebChat Setup
 description: Configures WebChat messaging provider
-version: "1"
+type: messaging
+start: configure
 
 nodes:
-  - id: configure
-    type: component
-    component: messaging-provider-webchat
-    op: messaging.configure
-    input: {}
-
-edges: []
+  configure:
+    messaging-provider-webchat:
+      op: messaging.configure
+    routing:
+      - out: true

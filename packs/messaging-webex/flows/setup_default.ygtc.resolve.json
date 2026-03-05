@@ -5,7 +5,7 @@
     "configure": {
       "source": {
         "kind": "local",
-        "path": "file://../components/messaging-provider-webex.wasm"
+        "path": "file://../components/messaging-provider-webex/component.wasm"
       }
     }
   }

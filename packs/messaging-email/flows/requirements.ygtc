@@ -1,16 +1,12 @@
----
-# Requirements check flow for messaging-email provider.
-# Validates that required configuration is in place.
 id: requirements
 title: Email Requirements Check
 description: Validates Email messaging provider configuration
-version: "1"
+type: messaging
+start: check_config
 
 nodes:
-  - id: check_config
-    type: component
-    component: messaging-provider-email
-    op: messaging.configure
-    input: {}
-
-edges: []
+  check_config:
+    messaging-provider-email:
+      op: messaging.configure
+    routing:
+      - out: true

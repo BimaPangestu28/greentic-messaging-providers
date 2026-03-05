@@ -1,16 +1,12 @@
----
-# Default setup flow for messaging-telegram provider.
-# Invoked during QA wizard to configure the messaging provider.
 id: setup_default
 title: Default Telegram Setup
 description: Configures Telegram messaging provider
-version: "1"
+type: messaging
+start: configure
 
 nodes:
-  - id: configure
-    type: component
-    component: messaging-provider-telegram
-    op: messaging.configure
-    input: {}
-
-edges: []
+  configure:
+    messaging-provider-telegram:
+      op: messaging.configure
+    routing:
+      - out: true

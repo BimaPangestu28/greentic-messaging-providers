@@ -13,7 +13,7 @@ components:
     capabilities:
       wasi: { random: false, clocks: false }
       host: { secrets-store: true, http-client: true }
-    wasm: components/messaging-provider-teams.wasm
+    wasm: components/messaging-provider-teams/component.wasm
 
   - id: messaging-ingress-teams
     version: 0.4.34
@@ -23,7 +23,7 @@ components:
     capabilities:
       wasi: { random: false, clocks: false }
       host: { secrets-store: true, state-store: true, http-client: true }
-    wasm: components/messaging-ingress-teams.wasm
+    wasm: components/messaging-ingress-teams/component.wasm
 
 flows:
   - id: setup_default

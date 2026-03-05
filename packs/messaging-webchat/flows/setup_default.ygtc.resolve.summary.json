@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "flow": "setup_default.ygtc",
+  "nodes": {
+    "configure": {
+      "component_id": "messaging-provider-webchat",
+      "source": {
+        "kind": "local",
+        "path": "../components/messaging-provider-webchat/component.wasm"
+      },
+      "digest": "sha256:304c4dbc17257992342d405ecdd548f6b32a6cf12f787eb6be33b06a30aaed8e",
+      "manifest": {
+        "world": "greentic:component/component-v0-v6-v0@0.6.1",
+        "version": "0.4.34"
+      }
+    }
+  }
+}

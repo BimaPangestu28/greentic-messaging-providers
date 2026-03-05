@@ -13,7 +13,7 @@ components:
     capabilities:
       wasi: { random: false, clocks: false }
       host: { secrets-store: true, state-store: true }
-    wasm: components/messaging-provider-webchat.wasm
+    wasm: components/messaging-provider-webchat/component.wasm
 
 flows:
   - id: setup_default

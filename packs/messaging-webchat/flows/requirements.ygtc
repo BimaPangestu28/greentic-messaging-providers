@@ -1,16 +1,12 @@
----
-# Requirements check flow for messaging-webchat provider.
-# Validates that required configuration is in place.
 id: requirements
 title: WebChat Requirements Check
 description: Validates WebChat messaging provider configuration
-version: "1"
+type: messaging
+start: check_config
 
 nodes:
-  - id: check_config
-    type: component
-    component: messaging-provider-webchat
-    op: messaging.configure
-    input: {}
-
-edges: []
+  check_config:
+    messaging-provider-webchat:
+      op: messaging.configure
+    routing:
+      - out: true

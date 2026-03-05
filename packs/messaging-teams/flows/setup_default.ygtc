@@ -1,16 +1,12 @@
----
-# Default setup flow for messaging-teams provider.
-# Invoked during QA wizard to configure the messaging provider.
 id: setup_default
 title: Default Teams Setup
 description: Configures Teams messaging provider
-version: "1"
+type: messaging
+start: configure
 
 nodes:
-  - id: configure
-    type: component
-    component: messaging-provider-teams
-    op: messaging.configure
-    input: {}
-
-edges: []
+  configure:
+    messaging-provider-teams:
+      op: messaging.configure
+    routing:
+      - out: true

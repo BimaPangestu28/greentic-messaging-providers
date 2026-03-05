@@ -13,7 +13,7 @@ components:
     capabilities:
       wasi: { random: false, clocks: false }
       host: { secrets-store: true, http-client: true }
-    wasm: components/messaging-provider-webex.wasm
+    wasm: components/messaging-provider-webex/component.wasm
 
 flows:
   - id: setup_default

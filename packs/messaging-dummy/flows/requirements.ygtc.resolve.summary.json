@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "flow": "requirements.ygtc",
+  "nodes": {
+    "check_config": {
+      "component_id": "messaging-provider-dummy",
+      "source": {
+        "kind": "local",
+        "path": "../components/messaging-provider-dummy/component.wasm"
+      },
+      "digest": "sha256:98c4e3bf5ddde8164e58dbb3a6b574f584c747dfd1cfb61e53aafd2b546d1692",
+      "manifest": {
+        "world": "greentic:component/component-v0-v6-v0@0.6.1",
+        "version": "0.4.34"
+      }
+    }
+  }
+}

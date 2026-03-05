@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "flow": "requirements.ygtc",
+  "nodes": {
+    "check_config": {
+      "component_id": "messaging-provider-telegram",
+      "source": {
+        "kind": "local",
+        "path": "../components/messaging-provider-telegram/component.wasm"
+      },
+      "digest": "sha256:3041f1bcc3dbe5230933e30da67af0d91c59a8da1b3bfce3af0eae564567fd2c",
+      "manifest": {
+        "world": "greentic:component/component-v0-v6-v0@0.6.1",
+        "version": "0.4.34"
+      }
+    }
+  }
+}

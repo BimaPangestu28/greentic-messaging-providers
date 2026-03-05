@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "flow": "requirements.ygtc",
+  "nodes": {
+    "check_config": {
+      "component_id": "messaging-provider-whatsapp",
+      "source": {
+        "kind": "local",
+        "path": "../components/messaging-provider-whatsapp/component.wasm"
+      },
+      "digest": "sha256:5bae2bdf3d9ddf667d30d003f48923f96a4f3e8f8d50e45355f66159a7bcabd0",
+      "manifest": {
+        "world": "greentic:component/component-v0-v6-v0@0.6.1",
+        "version": "0.4.34"
+      }
+    }
+  }
+}

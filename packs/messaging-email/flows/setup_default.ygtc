@@ -1,16 +1,12 @@
----
-# Default setup flow for messaging-email provider.
-# Invoked during QA wizard to configure the messaging provider.
 id: setup_default
 title: Default Email Setup
 description: Configures Email messaging provider
-version: "1"
+type: messaging
+start: configure
 
 nodes:
-  - id: configure
-    type: component
-    component: messaging-provider-email
-    op: messaging.configure
-    input: {}
-
-edges: []
+  configure:
+    messaging-provider-email:
+      op: messaging.configure
+    routing:
+      - out: true

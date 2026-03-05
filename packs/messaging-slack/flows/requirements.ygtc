@@ -1,16 +1,12 @@
----
-# Requirements check flow for messaging-slack provider.
-# Validates that required configuration is in place.
 id: requirements
 title: Slack Requirements Check
 description: Validates Slack messaging provider configuration
-version: "1"
+type: messaging
+start: check_config
 
 nodes:
-  - id: check_config
-    type: component
-    component: messaging-provider-slack
-    op: messaging.configure
-    input: {}
-
-edges: []
+  check_config:
+    messaging-provider-slack:
+      op: messaging.configure
+    routing:
+      - out: true

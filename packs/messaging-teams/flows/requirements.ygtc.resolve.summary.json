@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "flow": "requirements.ygtc",
+  "nodes": {
+    "check_config": {
+      "component_id": "messaging-provider-teams",
+      "source": {
+        "kind": "local",
+        "path": "../components/messaging-provider-teams/component.wasm"
+      },
+      "digest": "sha256:417510f5688403281ff0174efa860bca6feb61bae0ee5e75d90ec2eeaad98e82",
+      "manifest": {
+        "world": "greentic:component/component-v0-v6-v0@0.6.1",
+        "version": "0.4.34"
+      }
+    }
+  }
+}

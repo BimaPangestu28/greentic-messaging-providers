@@ -13,7 +13,7 @@ components:
     capabilities:
       wasi: { random: false, clocks: false }
       host: { secrets-store: true, http-client: true }
-    wasm: components/messaging-provider-telegram.wasm
+    wasm: components/messaging-provider-telegram/component.wasm
 
   - id: messaging-ingress-telegram
     version: 0.4.34
@@ -23,7 +23,7 @@ components:
     capabilities:
       wasi: { random: false, clocks: false }
       host: { secrets-store: true, state-store: true, http-client: true }
-    wasm: components/messaging-ingress-telegram.wasm
+    wasm: components/messaging-ingress-telegram/component.wasm
 
 flows:
   - id: setup_default

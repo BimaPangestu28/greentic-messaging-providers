@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "flow": "setup_default.ygtc",
+  "nodes": {
+    "configure": {
+      "component_id": "messaging-provider-email",
+      "source": {
+        "kind": "local",
+        "path": "../components/messaging-provider-email/component.wasm"
+      },
+      "digest": "sha256:04f6016c71bbb365d196786d98d17e5a6dc9b0db65f98932614eca54cf3c40a2",
+      "manifest": {
+        "world": "greentic:component/component-v0-v6-v0@0.6.1",
+        "version": "0.4.34"
+      }
+    }
+  }
+}

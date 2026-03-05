@@ -5,7 +5,7 @@
     "check_config": {
       "source": {
         "kind": "local",
-        "path": "file://../components/messaging-provider-webchat.wasm"
+        "path": "file://../components/messaging-provider-webchat/component.wasm"
       }
     }
   }

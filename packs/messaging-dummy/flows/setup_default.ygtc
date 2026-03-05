@@ -1,16 +1,12 @@
----
-# Default setup flow for messaging-dummy provider.
-# Invoked during QA wizard to configure the messaging provider.
 id: setup_default
 title: Default Dummy Setup
 description: Configures Dummy messaging provider
-version: "1"
+type: messaging
+start: configure
 
 nodes:
-  - id: configure
-    type: component
-    component: messaging-provider-dummy
-    op: messaging.configure
-    input: {}
-
-edges: []
+  configure:
+    messaging-provider-dummy:
+      op: messaging.configure
+    routing:
+      - out: true

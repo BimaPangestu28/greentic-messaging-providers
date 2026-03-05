@@ -2,71 +2,76 @@ pack_id: messaging-dummy
 version: 0.4.34
 kind: application
 publisher: Greentic
-description: "Dummy messaging provider — for testing and development"
-
 components:
-  - id: messaging-provider-dummy
-    version: 0.4.34
-    world: greentic:component/component-v0-v6-v0@0.6.1
-    supports: [messaging]
-    profiles: { default: default, supported: [default] }
-    capabilities:
-      wasi: { random: false, clocks: false }
-      host: {}
-    wasm: components/messaging-provider-dummy.wasm
-
+- id: messaging-provider-dummy
+  version: 0.4.34
+  world: greentic:component/component-v0-v6-v0@0.6.1
+  supports:
+  - messaging
+  profiles:
+    default: default
+    supported:
+    - default
+  capabilities:
+    wasi:
+      random: false
+      clocks: false
+    host: {}
+  wasm: components/messaging-provider-dummy/component.wasm
+dependencies: []
 flows:
-  - id: setup_default
-    file: flows/setup_default.ygtc
-    tags: [default]
-    entrypoints: [setup]
-  - id: requirements
-    file: flows/requirements.ygtc
-    tags: [default]
-    entrypoints: [requirements]
-
+- id: requirements
+  file: flows/requirements.ygtc
+  tags:
+  - default
+  entrypoints:
+  - requirements
+- id: setup_default
+  file: flows/setup_default.ygtc
+  tags:
+  - default
+  entrypoints:
+  - setup
 assets:
-  - path: setup.yaml
-  - path: schemas/messaging/dummy/public.config.schema.json
-  - path: fixtures/requirements.expected.json
-  - path: fixtures/setup.input.json
-  - path: fixtures/setup.expected.plan.json
-  - path: fixtures/egress.request.json
-  - path: fixtures/egress.expected.summary.json
-
+- path: setup.yaml
+- path: schemas/messaging/dummy/public.config.schema.json
+- path: fixtures/requirements.expected.json
+- path: fixtures/setup.input.json
+- path: fixtures/setup.expected.plan.json
+- path: fixtures/egress.request.json
+- path: fixtures/egress.expected.summary.json
 extensions:
   greentic.ext.capabilities.v1:
     kind: greentic.ext.capabilities.v1
     version: 0.4.0
     inline:
-      schema_version: 1
       offers:
-        - offer_id: "messaging-dummy-v1"
-          cap_id: "greentic.cap.messaging.v1"
-          version: "v1"
-          provider:
-            component_ref: "messaging-provider-dummy"
-            op: "messaging.configure"
-          priority: 100
-          requires_setup: false
-          setup:
-            qa_ref: "setup.yaml"
-
+      - cap_id: greentic.cap.messaging.v1
+        offer_id: messaging-dummy-v1
+        priority: 100
+        provider:
+          component_ref: messaging-provider-dummy
+          op: messaging.configure
+        requires_setup: false
+        setup:
+          qa_ref: setup.yaml
+        version: v1
+      schema_version: 1
   greentic.provider-extension.v1:
     kind: greentic.provider-extension.v1
     version: 0.4.34
     inline:
       providers:
-        - provider_type: messaging.dummy
-          capabilities:
-            - messaging
-          ops:
-            - send
-            - qa-spec
-            - apply-answers
-            - i18n-keys
-          config_schema_ref: schemas/messaging/dummy/public.config.schema.json
-          runtime:
-            component_ref: messaging-provider-dummy
-            export: schema-core-api
-            world: greentic:provider/schema-core@1.0.0
+      - provider_type: messaging.dummy
+        capabilities:
+        - messaging
+        ops:
+        - send
+        - qa-spec
+        - apply-answers
+        - i18n-keys
+        config_schema_ref: schemas/messaging/dummy/public.config.schema.json
+        runtime:
+          component_ref: messaging-provider-dummy
+          export: schema-core-api
+          world: greentic:provider/schema-core@1.0.0

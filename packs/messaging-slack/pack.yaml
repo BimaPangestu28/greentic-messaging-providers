@@ -13,7 +13,7 @@ components:
     capabilities:
       wasi: { random: false, clocks: false }
       host: { secrets-store: true, http-client: true }
-    wasm: components/messaging-provider-slack.wasm
+    wasm: components/messaging-provider-slack/component.wasm
 
   - id: messaging-ingress-slack
     version: 0.4.34
@@ -23,7 +23,7 @@ components:
     capabilities:
       wasi: { random: false, clocks: false }
       host: { secrets-store: true, state-store: true, http-client: true }
-    wasm: components/messaging-ingress-slack.wasm
+    wasm: components/messaging-ingress-slack/component.wasm
 
 flows:
   - id: setup_default

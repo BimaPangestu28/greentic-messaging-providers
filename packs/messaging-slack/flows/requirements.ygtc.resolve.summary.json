@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "flow": "requirements.ygtc",
+  "nodes": {
+    "check_config": {
+      "component_id": "messaging-provider-slack",
+      "source": {
+        "kind": "local",
+        "path": "../components/messaging-provider-slack/component.wasm"
+      },
+      "digest": "sha256:dea5df04e9b86bc5f4554b259ddcc08c87ecb0441a52fb3af0a51497fed05d6a",
+      "manifest": {
+        "world": "greentic:component/component-v0-v6-v0@0.6.1",
+        "version": "0.4.34"
+      }
+    }
+  }
+}

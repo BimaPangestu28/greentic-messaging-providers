@@ -1,16 +1,12 @@
----
-# Default setup flow for messaging-webex provider.
-# Invoked during QA wizard to configure the messaging provider.
 id: setup_default
 title: Default Webex Setup
 description: Configures Webex messaging provider
-version: "1"
+type: messaging
+start: configure
 
 nodes:
-  - id: configure
-    type: component
-    component: messaging-provider-webex
-    op: messaging.configure
-    input: {}
-
-edges: []
+  configure:
+    messaging-provider-webex:
+      op: messaging.configure
+    routing:
+      - out: true

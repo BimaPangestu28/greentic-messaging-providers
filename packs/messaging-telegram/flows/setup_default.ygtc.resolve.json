@@ -5,7 +5,7 @@
     "configure": {
       "source": {
         "kind": "local",
-        "path": "file://../components/messaging-provider-telegram.wasm"
+        "path": "file://../components/messaging-provider-telegram/component.wasm"
       }
     }
   }
