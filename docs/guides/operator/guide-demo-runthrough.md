@@ -61,7 +61,7 @@ ls demo-bundle/
 If no `demo-bundle/`, create one:
 
 ```bash
-greentic-operator demo new demo-bundle --out .
+gtc op demo new demo-bundle --out .
 mkdir -p demo-bundle/providers/messaging
 ```
 
@@ -190,14 +190,14 @@ docker run -d --name jaeger \
 ### Option A: With Telemetry (stdout)
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ### Option B: With Telemetry (Jaeger)
 
 ```bash
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ### Expected Log Output
@@ -238,7 +238,7 @@ Key lines to highlight:
 
 ```bash
 # In another terminal
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --to 7951102355 \
@@ -248,7 +248,7 @@ GREENTIC_ENV=dev greentic-operator demo send \
 ### 5.3 Slack (Live)
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-slack \
   --to C0AFWP5C067 \
@@ -258,7 +258,7 @@ GREENTIC_ENV=dev greentic-operator demo send \
 ### 5.4 Teams (Live)
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-teams \
   --to "c3392cbc-2cb0-48e8-9247-504d8defea40:19:wQzzrth6t3YA-aEdLzt8Pse3kW3Us-nJl9XzN-5NcEE1@thread.tacv2" \
@@ -310,7 +310,7 @@ docker exec redis redis-cli MONITOR
 
 1. Send a message via WebChat
 2. `Ctrl+C` to stop operator
-3. Restart operator: `GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle`
+3. Restart operator: `GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle`
 4. Refresh WebChat → conversation preserved
 
 ### 7.3 Talking Points
@@ -359,21 +359,21 @@ docker rm redis jaeger 2>/dev/null
 
 ```bash
 # Start demo
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # Start with OTLP
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # Send message
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle --provider <provider> --to <target> --text "<message>"
 
 # Check setup
-GREENTIC_ENV=dev greentic-operator demo setup --bundle demo-bundle --best-effort
+GREENTIC_ENV=dev gtc op demo setup --bundle demo-bundle --best-effort
 
 # List packs
-GREENTIC_ENV=dev greentic-operator demo list-packs --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo list-packs --bundle demo-bundle
 ```
 
 ### URLs

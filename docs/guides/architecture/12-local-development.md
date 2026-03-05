@@ -35,7 +35,7 @@ rm -f "oras_${ORAS_VERSION}_linux_amd64.tar.gz"
 cd /root/works/personal/greentic
 
 # Create bundle scaffold
-greentic-operator demo new demo-bundle
+gtc op demo new demo-bundle
 
 # Copy pre-built packs
 mkdir -p demo-bundle/providers/messaging
@@ -83,15 +83,15 @@ cd greentic-messaging-providers
 ./tools/build_components/messaging-provider-telegram.sh
 
 # 3. Update WASM di .gtpack
-mkdir -p /tmp/pack-update/components
-cp target/components/messaging-provider-telegram.wasm /tmp/pack-update/components/
+mkdir -p /tmp/pack-update/components/messaging-provider-telegram
+cp target/components/messaging-provider-telegram/component.wasm /tmp/pack-update/components/messaging-provider-telegram/
 cd /tmp/pack-update
 zip -u /root/works/personal/greentic/demo-bundle/providers/messaging/messaging-telegram.gtpack \
-  components/messaging-provider-telegram.wasm
+  components/messaging-provider-telegram/component.wasm
 
 # 4. Test
 cd /root/works/personal/greentic
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --text "Hello test" \
@@ -118,14 +118,14 @@ cd "$PROVIDERS_DIR"
 ./tools/build_components/${PROVIDER}.sh
 
 echo "==> Updating .gtpack..."
-mkdir -p /tmp/pack-update/components
-cp "target/components/${PROVIDER}.wasm" /tmp/pack-update/components/
+mkdir -p /tmp/pack-update/components/${PROVIDER}
+cp "target/components/${PROVIDER}/component.wasm" /tmp/pack-update/components/${PROVIDER}/
 cd /tmp/pack-update
-zip -u "$BUNDLE/providers/messaging/${PACK}.gtpack" "components/${PROVIDER}.wasm"
+zip -u "$BUNDLE/providers/messaging/${PACK}.gtpack" "components/${PROVIDER}/component.wasm"
 
 echo "==> Sending test message..."
 cd "$ROOT"
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle "$BUNDLE" \
   --provider "$PACK" \
   --text "$TEXT" \
@@ -156,7 +156,7 @@ Pemakaian:
 ```bash
 cd greentic-messaging-providers
 ./tools/build_components/messaging-provider-telegram.sh
-# Output: target/components/messaging-provider-telegram.wasm
+# Output: target/components/messaging-provider-telegram/component.wasm
 ```
 
 ### Build Semua 23 WASM Components
@@ -195,7 +195,7 @@ cp components/templates/templates.wasm target/components/ai.greentic.component-t
 
 ```bash
 # Basic text message
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --text "Hello" \
@@ -203,7 +203,7 @@ GREENTIC_ENV=dev greentic-operator demo send \
   --env dev
 
 # Dengan destination (untuk real send)
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --text "Hello" \
@@ -213,7 +213,7 @@ GREENTIC_ENV=dev greentic-operator demo send \
   --env dev
 
 # Dengan adaptive card
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --card path/to/card.json \
@@ -221,7 +221,7 @@ GREENTIC_ENV=dev greentic-operator demo send \
   --env dev
 
 # Print required args (lihat apa yang provider butuhkan)
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --print-required-args \
@@ -231,19 +231,19 @@ GREENTIC_ENV=dev greentic-operator demo send \
 
 ### demo doctor - Validate Bundle
 ```bash
-GREENTIC_ENV=dev greentic-operator demo doctor \
+GREENTIC_ENV=dev gtc op demo doctor \
   --bundle demo-bundle
 ```
 
 ### demo list-packs - List Detected Packs
 ```bash
-GREENTIC_ENV=dev greentic-operator demo list-packs \
+GREENTIC_ENV=dev gtc op demo list-packs \
   --bundle demo-bundle
 ```
 
 ### demo list-flows - List Flows in a Pack
 ```bash
-GREENTIC_ENV=dev greentic-operator demo list-flows \
+GREENTIC_ENV=dev gtc op demo list-flows \
   --bundle demo-bundle \
   --pack messaging-telegram
 ```

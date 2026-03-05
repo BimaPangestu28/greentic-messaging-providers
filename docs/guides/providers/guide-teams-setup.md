@@ -1,13 +1,13 @@
 # Microsoft Teams Provider Setup Guide
 
-Set up the Teams messaging provider to send and receive messages in Microsoft Teams channels using the greentic-operator demo mode.
+Set up the Teams messaging provider to send and receive messages in Microsoft Teams channels using the gtc op demo mode.
 
 ## Architecture
 
 ```
                     EGRESS (send message)
                     ====================
-greentic-operator demo send
+gtc op demo send
     |
     v
 [messaging-teams.gtpack]  -- WASM provider component
@@ -194,7 +194,7 @@ Alternatively, if using the single-secret `seed-secret` tool, run all three in i
 ### Verify secrets
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo secrets list \
+GREENTIC_ENV=dev gtc op demo secrets list \
   --bundle demo-bundle --tenant demo
 ```
 
@@ -222,7 +222,7 @@ greentic-pack doctor --validate demo-bundle/providers/messaging/messaging-teams.
 ## Step 6: Start the Operator
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo start \
+GREENTIC_ENV=dev gtc op demo start \
   --bundle demo-bundle \
   --tenant default \
   --env dev
@@ -252,7 +252,7 @@ Note the public URL for webhook configuration in Step 8.
 The `--to` flag takes the format `team_id:channel_id`:
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-teams \
   --to "c3392cbc-2cb0-48e8-9247-504d8defea40:19:wQzzrth6t3YA-aEdLzt8Pse3kW3Us-nJl9XzN-5NcEE1@thread.tacv2" \
@@ -275,7 +275,7 @@ Expected output on success:
 ### Send to a chat (1:1 or group chat)
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-teams \
   --to "{CHAT_ID}" \
@@ -399,11 +399,11 @@ Azure Bot Service does not support programmatic webhook URL updates through the 
 greentic-pack doctor --validate demo-bundle/providers/messaging/messaging-teams.gtpack
 
 # List available flows
-GREENTIC_ENV=dev greentic-operator demo list-flows \
+GREENTIC_ENV=dev gtc op demo list-flows \
   --bundle demo-bundle --pack messaging-teams --domain messaging
 
 # Run diagnostics flow
-GREENTIC_ENV=dev greentic-operator demo run-flow \
+GREENTIC_ENV=dev gtc op demo run-flow \
   --bundle demo-bundle --pack messaging-teams --flow diagnostics --tenant default
 ```
 

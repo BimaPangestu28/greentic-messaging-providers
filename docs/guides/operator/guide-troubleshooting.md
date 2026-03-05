@@ -81,7 +81,7 @@ tail -20 demo-bundle/logs/cloudflared.log
 **Fix:** If the tunnel is not needed (e.g., testing egress only), disable it:
 
 ```bash
-greentic-operator demo start --cloudflared=off
+gtc op demo start --cloudflared=off
 ```
 
 ---
@@ -148,7 +148,7 @@ After rebuilding, update the gtpacks in your demo bundle. See section 7 for the 
 **Fix:** Either match the tenant on the CLI command:
 
 ```bash
-greentic-operator demo send --tenant default --provider messaging-telegram ...
+gtc op demo send --tenant default --provider messaging-telegram ...
 ```
 
 Or re-seed secrets under the correct tenant.
@@ -277,9 +277,9 @@ Fix: Verify the Azure app is registered as a PUBLIC client. Re-authenticate to o
 
 ```bash
 tmpdir=$(mktemp -d)
-mkdir -p "$tmpdir/components"
-cp new-provider.wasm "$tmpdir/components/messaging-provider-telegram.wasm"
-(cd "$tmpdir" && zip -u /path/to/messaging-telegram.gtpack "components/messaging-provider-telegram.wasm")
+mkdir -p "$tmpdir/components/messaging-provider-telegram"
+cp new-provider.wasm "$tmpdir/components/messaging-provider-telegram/component.wasm"
+(cd "$tmpdir" && zip -u /path/to/messaging-telegram.gtpack "components/messaging-provider-telegram/component.wasm")
 rm -rf "$tmpdir"
 ```
 
@@ -287,7 +287,7 @@ Verify the result:
 
 ```bash
 zipinfo /path/to/messaging-telegram.gtpack | grep components/
-# Should show clean paths like: components/messaging-provider-telegram.wasm
+# Should show clean paths like: components/messaging-provider-telegram/component.wasm
 ```
 
 ### `greentic-pack build` fails with OCI error

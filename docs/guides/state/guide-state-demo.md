@@ -12,7 +12,7 @@ Step-by-step guide to demo the state KV capability with `greentic-operator`.
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│ greentic-operator demo start                         │
+│ gtc op demo start                         │
 │                                                      │
 │  1. load packs ──────── discover state-redis.gtpack  │
 │  2. capability registry ── resolve cap.state.kv.v1   │
@@ -96,7 +96,7 @@ EOF
 ### Step 5: Start Operator
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 To also enable OTLP telemetry (traces in Jaeger):
@@ -109,7 +109,7 @@ docker run -d --name jaeger \
 
 # Start operator with Redis + OTLP
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ### Step 6: Verify
@@ -139,7 +139,7 @@ cargo run --manifest-path tools/seed-secret/Cargo.toml -- \
   "secrets://dev/default/_/state-redis/redis_url" "redis://127.0.0.1:6379"
 
 # Terminal 1: Start operator
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # Terminal 2: Send message via WebChat (creates conversation state)
 # Open http://localhost:8080/webchat in browser
@@ -147,7 +147,7 @@ GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
 
 # Terminal 1: Ctrl+C to stop operator
 # Terminal 1: Restart operator
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # Terminal 2: Refresh WebChat — conversation history is preserved!
 ```

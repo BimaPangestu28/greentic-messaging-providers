@@ -7,7 +7,7 @@ This guide covers configuring OpenTelemetry (OTel) for the Greentic platform.
 By default, greentic-operator uses `tracing_subscriber` with pretty-formatted stdout output. No configuration needed:
 
 ```bash
-greentic-operator demo start
+gtc op demo start
 ```
 
 ## Environment-Variable Configuration
@@ -15,7 +15,7 @@ greentic-operator demo start
 Set `OTEL_EXPORTER_OTLP_ENDPOINT` to enable OTLP export:
 
 ```bash
-OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 greentic-operator demo start
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 gtc op demo start
 ```
 
 Additional env vars:
@@ -46,7 +46,7 @@ docker run -d --name jaeger \
 
 # Start operator with OTLP
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-  greentic-operator demo start
+  gtc op demo start
 
 # View traces at http://localhost:16686
 ```
@@ -56,7 +56,7 @@ OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
 ```bash
 TELEMETRY_PRESET=honeycomb \
 HONEYCOMB_API_KEY=your-api-key \
-  greentic-operator demo start
+  gtc op demo start
 ```
 
 ## Presets

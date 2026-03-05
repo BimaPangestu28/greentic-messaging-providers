@@ -63,7 +63,7 @@ No server needed. Send individual cards to any platform.
 ### 1a. Send to Teams
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-teams \
   --tenant demo --env dev \
@@ -75,7 +75,7 @@ GREENTIC_ENV=dev greentic-operator demo send \
 ### 1b. Send to Webex
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-webex \
   --tenant default --env dev \
@@ -91,7 +91,7 @@ cd /root/works/personal/greentic
 
 # Teams — all 14 cards
 for card in RFQ-CARD-{01_intake,02_processing,03_tasks_dashboard,04_task_detail,05B_rag_answer,05_rag_edit,06_pack_ready,07_send_review,08_review_dashboard,09_apply_change,10B_send_approval,10_final_approval,11_compliance_summary,STATUS}; do
-  GREENTIC_ENV=dev greentic-operator demo send \
+  GREENTIC_ENV=dev gtc op demo send \
     --bundle demo-bundle --provider messaging-teams \
     --tenant demo --env dev \
     --to "c3392cbc-2cb0-48e8-9247-504d8defea40:19:wQzzrth6t3YA-aEdLzt8Pse3kW3Us-nJl9XzN-5NcEE1@thread.tacv2" \
@@ -101,7 +101,7 @@ done
 
 # Webex — all 14 cards
 for card in RFQ-CARD-{01_intake,02_processing,03_tasks_dashboard,04_task_detail,05B_rag_answer,05_rag_edit,06_pack_ready,07_send_review,08_review_dashboard,09_apply_change,10B_send_approval,10_final_approval,11_compliance_summary,STATUS}; do
-  GREENTIC_ENV=dev greentic-operator demo send \
+  GREENTIC_ENV=dev gtc op demo send \
     --bundle demo-bundle --provider messaging-webex \
     --tenant default --env dev \
     --to "Y2lzY29zcGFyazovL3VybjpURUFNOnVzLXdlc3QtMl9yL1JPT00vODRmNTA2NjAtMGRkZC0xMWYxLWI4MGYtYWQ2N2Y3OTk5NDlk" \
@@ -132,7 +132,7 @@ For the interactive card flow (user clicks button → next card appears), you ne
 ```bash
 cd /root/works/personal/greentic
 
-GREENTIC_ENV=dev greentic-operator demo start \
+GREENTIC_ENV=dev gtc op demo start \
   --bundle demo-bundle \
   --cloudflared on \
   --skip-setup \

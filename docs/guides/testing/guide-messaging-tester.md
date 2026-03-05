@@ -36,9 +36,9 @@ cargo build --release --package messaging-ingress-telegram --target wasm32-wasip
 When you pass `--provider messaging-telegram`, the tester searches for the WASM in this order:
 
 1. `$GREENTIC_PROVIDER_WASM` env var (if set, uses that directly)
-2. `target/components/messaging-provider-telegram.wasm`
-3. `target/wasm32-wasip2/release/messaging-provider-telegram.wasm`
-4. `target/wasm32-wasip2/debug/messaging-provider-telegram.wasm`
+2. `target/components/messaging-provider-telegram/component.wasm`
+3. `target/wasm32-wasip2/release/messaging_provider_telegram.wasm`
+4. `target/wasm32-wasip2/debug/messaging_provider_telegram.wasm`
 5. `components/messaging-provider-telegram/target/wasm32-wasip2/release/...`
 
 If nothing is found, it attempts `cargo component build -p messaging-provider-telegram` automatically.

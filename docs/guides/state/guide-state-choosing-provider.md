@@ -20,7 +20,7 @@ Greentic supports multiple state backends through the capability system. This gu
 ## When to Use In-Memory
 
 - **Local development** — quick iteration without external dependencies
-- **Demo environments** — `greentic-operator demo start` uses memory by default
+- **Demo environments** — `gtc op demo start` uses memory by default
 - **Unit/integration tests** — deterministic, fast, no cleanup needed
 - **Stateless flows** — when flow state doesn't need to survive restarts
 

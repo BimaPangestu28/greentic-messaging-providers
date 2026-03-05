@@ -65,14 +65,14 @@ Alternatively, use cloudflared (operator can start it automatically):
 
 ```bash
 # Operator will start cloudflared if --cloudflared is not set to off
-GREENTIC_ENV=dev greentic-operator demo start --bundle .
+GREENTIC_ENV=dev gtc op demo start --bundle .
 ```
 
 ### 3. Start the Operator
 
 ```bash
 # Terminal 2: start operator
-GREENTIC_ENV=dev greentic-operator demo start \
+GREENTIC_ENV=dev gtc op demo start \
   --bundle . \
   --tenant default \
   --verbose
@@ -149,7 +149,7 @@ curl -s "https://api.telegram.org/bot${BOT_TOKEN}/getWebhookInfo" | jq .
 
 5. Test egress:
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle . --provider messaging-telegram \
   --to "CHAT_ID" --text "Hello!"
 ```
@@ -193,7 +193,7 @@ App Manifest (JSON) for quick setup:
 
 Test egress:
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle . --provider messaging-slack \
   --to "C0CHANNEL_ID" --text "Hello Slack!"
 ```
@@ -211,7 +211,7 @@ Teams uses Microsoft Graph API for sending and Bot Framework for receiving.
 
 Test egress:
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle . --provider messaging-teams \
   --to "TEAM_ID:CHANNEL_ID" --text "Hello Teams!"
 ```
@@ -261,7 +261,7 @@ npm install && npm run dev
 
 Test egress (auto-detects roomId vs email):
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle . --provider messaging-webex \
   --to "Y2lzY29zcGFyazov..." --text "Hello Webex!"
 ```
@@ -273,7 +273,7 @@ GREENTIC_ENV=dev greentic-operator demo send \
 3. Seed: `from_address`, `graph_tenant_id`, `ms_graph_client_id`, `ms_graph_refresh_token`
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle . --provider messaging-email \
   --to "recipient@example.com" --text "Hello from Greentic!"
 ```
@@ -292,13 +292,13 @@ GREENTIC_ENV=dev greentic-operator demo send \
 
 ```bash
 # List available packs
-GREENTIC_ENV=dev greentic-operator demo list-packs --bundle . --domain all
+GREENTIC_ENV=dev gtc op demo list-packs --bundle . --domain all
 
 # List flows in a pack
-GREENTIC_ENV=dev greentic-operator demo list-flows --bundle . --pack messaging-telegram
+GREENTIC_ENV=dev gtc op demo list-flows --bundle . --pack messaging-telegram
 
 # Test ingress with synthetic webhook
-GREENTIC_ENV=dev greentic-operator demo ingress \
+GREENTIC_ENV=dev gtc op demo ingress \
   --bundle . --provider messaging-telegram \
   --body-json '{"update_id":1,"message":{"message_id":1,"from":{"id":123,"is_bot":false,"first_name":"Test"},"chat":{"id":123,"type":"private"},"date":1234567890,"text":"hello"}}'
 
@@ -307,7 +307,7 @@ tail -f logs/operator.log
 tail -f logs/cloudflared.log
 
 # Bundle health check
-GREENTIC_ENV=dev greentic-operator demo doctor --bundle .
+GREENTIC_ENV=dev gtc op demo doctor --bundle .
 ```
 
 ## Rebuilding Provider WASMs
@@ -325,11 +325,11 @@ SKIP_WASM_TOOLS_VALIDATION=1 cargo build --target wasm32-wasip2 --release -p mes
 
 # Update gtpack (replace WASM inside zip)
 tmpdir=$(mktemp -d)
-mkdir -p "$tmpdir/components"
+mkdir -p "$tmpdir/components/messaging-provider-telegram"
 cp target/wasm32-wasip2/release/messaging_provider_telegram.wasm \
-   "$tmpdir/components/messaging-provider-telegram.wasm"
+   "$tmpdir/components/messaging-provider-telegram/component.wasm"
 (cd "$tmpdir" && zip -u /path/to/demo-bundle/providers/messaging/messaging-telegram.gtpack \
-   components/messaging-provider-telegram.wasm)
+   components/messaging-provider-telegram/component.wasm)
 rm -rf "$tmpdir"
 
 # Restart operator to pick up new pack

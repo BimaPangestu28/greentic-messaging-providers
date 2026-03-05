@@ -11,31 +11,23 @@ A **provider** is a `.gtpack` archive containing WASM components and flows that 
 Each `.gtpack` is a ZIP archive:
 
 ```
-messaging-telegram.gtpack
+messaging-telegram.gtpack (Capability-Driven Pattern)
 ├── pack.yaml                # Pack manifest (components, flows, extensions)
-├── pack.manifest.json       # Generated metadata
 ├── components/
-│   ├── messaging-provider-telegram.wasm   # Core provider (send/reply/qa-spec)
-│   ├── messaging-ingress-telegram.wasm    # Webhook handler
-│   ├── provision.wasm                     # Setup orchestration
-│   ├── questions.wasm                     # QA form rendering
-│   ├── templates.wasm                     # Handlebars templating
-│   └── ...
+│   ├── messaging-provider-telegram/
+│   │   └── component.wasm   # Core provider (send/reply/qa-spec/apply-answers/i18n-keys)
+│   └── messaging-ingress-telegram/
+│       └── component.wasm   # Webhook handler
 ├── flows/
-│   ├── default.ygtc              # Default message handler
-│   ├── setup_default.ygtc        # Setup flow
-│   ├── setup_qa.ygtc             # QA-based setup
-│   ├── verify_webhooks.ygtc      # Webhook verification
-│   ├── update.ygtc               # Config update
-│   ├── requirements.ygtc         # Requirement validation
-│   ├── diagnostics.ygtc          # Diagnostic checks
-│   ├── sync_subscriptions.ygtc   # Subscription sync
-│   └── *.ygtc.resolve.json       # Component resolution metadata
+│   ├── setup_default.ygtc                 # Single-node: invoke messaging.configure
+│   ├── setup_default.ygtc.resolve.json
+│   ├── requirements.ygtc                  # Single-node: invoke messaging.configure
+│   └── requirements.ygtc.resolve.json
 ├── assets/
-│   ├── setup.yaml                # Setup form definition
+│   ├── setup.yaml                         # QA wizard form definition
 │   └── schemas/messaging/telegram/
 │       └── public.config.schema.json
-└── fixtures/                     # Test fixtures
+└── fixtures/                              # Test fixtures
 ```
 
 ## 1. Add a Provider
@@ -86,7 +78,7 @@ echo "messaging-telegram = public" >> demo-bundle/tenants/default/teams/default/
 
 ```bash
 # Via CLI
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 # Look for: "loaded provider pack messaging-telegram" in stdout
 
 # Via API (while operator is running)
@@ -288,7 +280,7 @@ cp new-messaging-telegram.gtpack demo-bundle/providers/messaging/messaging-teleg
 
 # Restart the operator to pick up the new pack
 # (Ctrl+C the running operator, then start again)
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ### Update a WASM inside an existing gtpack
@@ -298,11 +290,11 @@ If you only rebuilt one component:
 ```bash
 # Create temp dir with correct zip structure
 tmpdir=$(mktemp -d)
-mkdir -p "$tmpdir/components"
-cp target/components/messaging_provider_telegram.wasm "$tmpdir/components/messaging-provider-telegram.wasm"
+mkdir -p "$tmpdir/components/messaging-provider-telegram"
+cp target/components/messaging-provider-telegram/component.wasm "$tmpdir/components/messaging-provider-telegram/component.wasm"
 
 # Update the zip in-place
-(cd "$tmpdir" && zip -u /path/to/messaging-telegram.gtpack components/messaging-provider-telegram.wasm)
+(cd "$tmpdir" && zip -u /path/to/messaging-telegram.gtpack components/messaging-provider-telegram/component.wasm)
 rm -rf "$tmpdir"
 
 # Verify
@@ -337,7 +329,7 @@ Secrets are stored in `demo-bundle/.greentic/dev/.dev.secrets.env`. The secrets 
 ### Restart operator
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ## Provider-Specific Setup Notes

@@ -54,7 +54,7 @@ cp greentic-messaging-providers/dist/packs/messaging-webchat.gtpack \
 ## Step 2: Start the operator
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo start \
+GREENTIC_ENV=dev gtc op demo start \
   --bundle demo-bundle \
   --tenant default \
   --env dev
@@ -197,7 +197,7 @@ The `dev` skin is pre-configured with `tokenUrl: "http://localhost:8080/token"`,
 To push a message from the platform into an existing WebChat conversation:
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-webchat \
   --to "$CONV_ID" \
@@ -237,7 +237,7 @@ The signing key is auto-generated at operator startup if not seeded in secrets. 
 
 ```bash
 # Seed signing key into dev secrets store (optional)
-GREENTIC_ENV=dev greentic-operator demo seed-secret \
+GREENTIC_ENV=dev gtc op demo seed-secret \
   --bundle demo-bundle \
   --tenant default \
   --category messaging-webchat \

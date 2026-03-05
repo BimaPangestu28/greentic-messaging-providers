@@ -7,7 +7,7 @@ Set up the Telegram messaging provider with `greentic-operator` demo mode to sen
 ```
                     EGRESS (send message)
                     ====================
-greentic-operator demo send
+gtc op demo send
     |
     v
 [messaging-telegram.gtpack]  -- WASM provider component
@@ -144,7 +144,7 @@ demo-bundle/
 ## Step 4: Start the Operator
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo start \
+GREENTIC_ENV=dev gtc op demo start \
   --bundle demo-bundle \
   --tenant default \
   --env dev
@@ -207,7 +207,7 @@ curl -s "https://api.telegram.org/bot${BOT_TOKEN}/deleteWebhook"
 ## Step 6: Test Egress (Send a Message)
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --to "7951102355" \

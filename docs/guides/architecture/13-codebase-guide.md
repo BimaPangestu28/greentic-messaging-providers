@@ -330,7 +330,7 @@ Secrets di-declare di `component.manifest.json`:
 ### Outbound: Demo Send
 
 ```
-greentic-operator demo send --provider messaging-telegram --text "Hello"
+gtc op demo send --provider messaging-telegram --text "Hello"
     │
     │  1. Build ChannelMessageEnvelope dari args
     ▼
@@ -390,21 +390,21 @@ invoke_provider_op(domain, provider, "render_plan", payload)
 
 File `.gtpack` adalah **ZIP archive** yang berisi:
 ```
-messaging-telegram.gtpack (ZIP)
-├── manifest.cbor              ← metadata pack (CBOR format, bukan JSON)
+messaging-telegram.gtpack (ZIP) — Capability-Driven Pattern
+├── manifest.cbor              ← metadata pack (CBOR format)
 ├── components/
-│   ├── messaging-provider-telegram.wasm    ← provider WASM
-│   ├── messaging-ingress-telegram.wasm     ← ingress WASM (telegram only)
-│   └── ai.greentic.component-templates.wasm ← flow engine templates
+│   ├── messaging-provider-telegram/
+│   │   └── component.wasm     ← provider WASM (qa-spec/apply-answers/i18n-keys built-in)
+│   └── messaging-ingress-telegram/
+│       └── component.wasm     ← ingress WASM
 ├── flows/
-│   ├── setup_default/         ← flow steps for setup
-│   ├── diagnostics/
-│   └── ...
+│   ├── setup_default.ygtc                  ← single-node: invoke messaging.configure
+│   └── requirements.ygtc                   ← single-node: invoke messaging.configure
 ├── schemas/
 │   └── messaging/telegram/
 │       └── public.config.schema.json
 └── assets/
-    └── secrets_backend.json
+    └── setup.yaml
 ```
 
 ### pack.yaml → manifest.cbor
@@ -429,14 +429,14 @@ cd greentic-messaging-providers
 
 # Build WASM
 ./tools/build_components/messaging-provider-telegram.sh
-# Output: target/components/messaging-provider-telegram.wasm
+# Output: target/components/messaging-provider-telegram/component.wasm
 
 # Update di .gtpack
-mkdir -p /tmp/pu/components
-cp target/components/messaging-provider-telegram.wasm /tmp/pu/components/
+mkdir -p /tmp/pu/components/messaging-provider-telegram
+cp target/components/messaging-provider-telegram/component.wasm /tmp/pu/components/messaging-provider-telegram/
 cd /tmp/pu
 zip -u /root/works/personal/greentic/demo-bundle/providers/messaging/messaging-telegram.gtpack \
-  components/messaging-provider-telegram.wasm
+  components/messaging-provider-telegram/component.wasm
 ```
 
 ### Test
@@ -445,14 +445,14 @@ zip -u /root/works/personal/greentic/demo-bundle/providers/messaging/messaging-t
 cd /root/works/personal/greentic
 
 # One-shot test (tanpa server)
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --text "Hello" \
   --tenant default --env dev
 
 # Atau jalankan server
-GREENTIC_ENV=dev greentic-operator demo start \
+GREENTIC_ENV=dev gtc op demo start \
   --bundle demo-bundle \
   --skip-setup \
   --cloudflared off \

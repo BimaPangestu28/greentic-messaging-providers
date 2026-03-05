@@ -12,7 +12,7 @@ Step-by-step guide to demo the telemetry capability provider with `greentic-oper
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ greentic-operator demo start                            │
+│ gtc op demo start                            │
 │                                                         │
 │  1. init_telemetry() ──────── env-var fallback (stdout) │
 │  2. load packs ────────────── discover telemetry-otlp   │
@@ -36,7 +36,7 @@ The simplest demo — telemetry spans printed to terminal.
 ### Run
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ### Expected Log
@@ -56,7 +56,7 @@ The telemetry capability is automatically discovered and invoked. Default config
 
 ```bash
 # In another terminal
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --to 7951102355 \
@@ -91,21 +91,21 @@ Verify: open http://localhost:16686 in browser.
 
 ```bash
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ### Step 3: Send Messages
 
 ```bash
 # Telegram
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-telegram \
   --to 7951102355 \
   --text "Jaeger trace test"
 
 # Slack
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-slack \
   --to C0AFWP5C067 \
@@ -196,7 +196,7 @@ datasources:
 docker compose up -d
 
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ### Step 5: View
@@ -220,7 +220,7 @@ GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
 ```bash
 cd demo-bundle
 # Add to secrets store
-GREENTIC_ENV=dev greentic-operator demo capability seed-secret \
+GREENTIC_ENV=dev gtc op demo capability seed-secret \
   --bundle . \
   --provider telemetry-otlp \
   --key otlp_api_key \
@@ -233,7 +233,7 @@ Or set via environment:
 TELEMETRY_PRESET=honeycomb \
 HONEYCOMB_API_KEY=your-api-key \
 OTEL_EXPORTER_OTLP_ENDPOINT=https://api.honeycomb.io:443 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ### Step 3: View
@@ -295,7 +295,7 @@ docker run -d --name jaeger \
 
 # Run operator
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # View: http://localhost:16686 → service "greentic-operator"
 ```
@@ -311,7 +311,7 @@ Best for: production-like setup, Grafana dashboard integration.
 # See "Demo 3" section above for full docker-compose setup
 
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # View: http://localhost:3000 (Grafana) → Explore → Tempo
 ```
@@ -320,7 +320,7 @@ GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
 ```bash
 OTEL_EXPORTER_OTLP_ENDPOINT=https://tempo-us-central1.grafana.net:443 \
 OTLP_HEADERS="Authorization=Basic $(echo -n 'instance_id:api_key' | base64)" \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ---
@@ -335,7 +335,7 @@ Best for: cloud-native SaaS observability, rich query UI.
 
 OTEL_EXPORTER_OTLP_ENDPOINT=https://api.honeycomb.io:443 \
 HONEYCOMB_API_KEY=your-api-key \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # View: https://ui.honeycomb.io → select dataset → query traces
 ```
@@ -358,7 +358,7 @@ docker run -d --name dd-agent \
 
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
 DD_API_KEY=your-dd-api-key \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # View: https://app.datadoghq.com → APM → Traces
 ```
@@ -375,7 +375,7 @@ Best for: full-stack observability, generous free tier (100GB/mo).
 
 OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp.nr-data.net:4317 \
 NEW_RELIC_API_KEY=your-license-key \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # View: https://one.newrelic.com → APM → Services → greentic-operator
 ```
@@ -392,7 +392,7 @@ Best for: existing Elastic/Kibana users, log + trace correlation.
 
 OTEL_EXPORTER_OTLP_ENDPOINT=https://your-apm-server:8200 \
 ELASTIC_APM_SECRET_TOKEN=your-secret-token \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # View: Kibana → Observability → APM → Services
 ```
@@ -411,7 +411,7 @@ Best for: AWS-native, X-Ray integration.
 # EC2: install ADOT collector binary
 
 OTEL_EXPORTER_OTLP_ENDPOINT=http://aws-otel-collector:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # View: AWS Console → CloudWatch → X-Ray traces
 ```
@@ -427,7 +427,7 @@ Best for: GCP-native, Cloud Trace integration.
 # https://cloud.google.com/trace/docs/setup/otlp
 
 OTEL_EXPORTER_OTLP_ENDPOINT=http://otc-collector:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # View: GCP Console → Trace → Trace list
 ```
@@ -443,7 +443,7 @@ Best for: Azure-native, Application Insights integration.
 # https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-configuration
 
 OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector-azure:4317 \
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 
 # View: Azure Portal → Application Insights → Transaction search
 ```
@@ -458,7 +458,7 @@ Best for: log aggregation (not tracing). Uses stdout JSON mode.
 # Loki collects logs, not traces — use json-stdout export mode
 # Pipe operator stdout to Promtail/Alloy for Loki ingestion
 
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle \
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle \
   2>&1 | promtail --stdin --client.url=http://localhost:3100/loki/api/v1/push
 
 # View: Grafana → Explore → Loki datasource
@@ -473,17 +473,17 @@ To switch backend, just change the env vars. No pack rebuild needed:
 ```bash
 # Monday: dev with Jaeger
 OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
-  greentic-operator demo start --bundle demo-bundle
+  gtc op demo start --bundle demo-bundle
 
 # Tuesday: staging with Honeycomb
 OTEL_EXPORTER_OTLP_ENDPOINT=https://api.honeycomb.io:443 \
 HONEYCOMB_API_KEY=xxx \
-  greentic-operator demo start --bundle demo-bundle
+  gtc op demo start --bundle demo-bundle
 
 # Wednesday: production with Datadog
 OTEL_EXPORTER_OTLP_ENDPOINT=http://datadog-agent:4317 \
 DD_API_KEY=xxx \
-  greentic-operator demo start --bundle demo-bundle
+  gtc op demo start --bundle demo-bundle
 ```
 
 ---

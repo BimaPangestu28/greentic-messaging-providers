@@ -6,7 +6,7 @@ Set up the Webex messaging provider with `greentic-operator` demo mode to send a
 
 ```
 EGRESS (outbound)
-greentic-operator demo send
+gtc op demo send
   -> messaging-provider-webex.wasm (render_plan -> encode -> send_payload)
   -> POST https://webexapis.com/v1/messages
   -> Message appears in Webex room/DM
@@ -91,7 +91,7 @@ demo-bundle/
 ## Step 4: Start the Operator
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo start \
+GREENTIC_ENV=dev gtc op demo start \
   --bundle demo-bundle \
   --tenant default \
   --env dev
@@ -167,7 +167,7 @@ The `status` field should be `active`. If it shows `disabled`, the targetUrl was
 ### Send to a room by ID
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-webex \
   --to "Y2lzY29zcGFyazovL3...roomId..." \
@@ -178,7 +178,7 @@ GREENTIC_ENV=dev greentic-operator demo send \
 ### Send to a person by email
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-webex \
   --to "user@example.com" \

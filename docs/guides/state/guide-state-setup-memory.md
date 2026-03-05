@@ -68,7 +68,7 @@ extensions:
 
 ```bash
 # Start operator with in-memory state (default)
-greentic-operator demo start
+gtc op demo start
 ```
 
 The operator automatically selects the in-memory provider when no Redis provider is configured.

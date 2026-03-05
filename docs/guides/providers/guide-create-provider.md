@@ -392,8 +392,9 @@ Copy to the standard location:
 
 ```bash
 mkdir -p target/components
+mkdir -p target/components/messaging-provider-myapp
 cp target/wasm32-wasip2/release/messaging_provider_myapp.wasm \
-   target/components/messaging-provider-myapp.wasm
+   target/components/messaging-provider-myapp/component.wasm
 ```
 
 ## 3. Create the Pack
@@ -442,7 +443,7 @@ components:
   - id: messaging-provider-myapp
     version: 0.1.0
     world: greentic:provider/schema-core@1.0.0
-    wasm: components/messaging-provider-myapp.wasm
+    wasm: components/messaging-provider-myapp/component.wasm
 flows:
   - id: setup_default
     file: flows/setup_default.ygtc
@@ -489,8 +490,9 @@ EOF
 ### Copy the WASM
 
 ```bash
-cp target/components/messaging-provider-myapp.wasm \
-   packs/messaging-myapp/components/
+mkdir -p packs/messaging-myapp/components/messaging-provider-myapp
+cp target/components/messaging-provider-myapp/component.wasm \
+   packs/messaging-myapp/components/messaging-provider-myapp/
 ```
 
 ### Build the gtpack
@@ -518,7 +520,7 @@ tools/seed-secret/target/release/seed-secret \
   "secrets://dev/default/_/messaging-myapp/api_key" "my-api-key-here"
 
 # Start operator
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 ### Verify

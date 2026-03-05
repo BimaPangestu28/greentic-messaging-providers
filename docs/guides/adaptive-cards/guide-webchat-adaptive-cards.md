@@ -303,7 +303,7 @@ tools/seed-secret/target/release/seed-secret \
 ## 6. Start the Operator
 
 ```bash
-GREENTIC_ENV=dev greentic-operator demo start --bundle demo-bundle
+GREENTIC_ENV=dev gtc op demo start --bundle demo-bundle
 ```
 
 `GREENTIC_ENV=dev` tells the operator to use the `dev` environment. This determines:
@@ -411,7 +411,7 @@ cat > /tmp/test-card.json << 'CARD'
 CARD
 
 # Get a conversation ID from browser DevTools (Network tab, look for /conversations request)
-GREENTIC_ENV=dev greentic-operator demo send \
+GREENTIC_ENV=dev gtc op demo send \
   --bundle demo-bundle \
   --provider messaging-webchat \
   --to "<conversation-id>" \
