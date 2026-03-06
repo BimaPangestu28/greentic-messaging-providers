@@ -64,6 +64,15 @@ extensions:
           setup:
             qa_ref: "setup.yaml"
 
+  greentic.messaging.validators.v1:
+    kind: greentic.messaging.validators.v1
+    version: 0.4.34
+    inline:
+      validators:
+      - component_ref: oci://ghcr.io/greenticai/validators/messaging:0.4.19
+        id: greentic.validators.messaging
+        world: greentic:pack-validate/pack-validator@0.1.0
+
   greentic.provider-extension.v1:
     kind: greentic.provider-extension.v1
     version: 0.4.34
@@ -99,6 +108,19 @@ extensions:
       secret_keys:
         - SLACK_BOT_TOKEN
       token_url: https://slack.com/api/oauth.v2.access
+
+  messaging.provider_flow_hints:
+    kind: messaging.provider_flow_hints
+    version: 0.4.34
+    inline:
+      messaging.slack.api:
+        default: default
+        diagnostics: diagnostics
+        remove: remove
+        rotate_credentials: rotate_credentials
+        setup_default: setup_default
+        update: update
+        verify_webhooks: verify_webhooks
 
   messaging.provider_ingress.v1:
     kind: messaging.provider_ingress.v1

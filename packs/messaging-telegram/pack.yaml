@@ -64,6 +64,15 @@ extensions:
           setup:
             qa_ref: "setup.yaml"
 
+  greentic.messaging.validators.v1:
+    kind: greentic.messaging.validators.v1
+    version: 0.4.34
+    inline:
+      validators:
+      - component_ref: oci://ghcr.io/greenticai/validators/messaging:0.4.19
+        id: greentic.validators.messaging
+        world: greentic:pack-validate/pack-validator@0.1.0
+
   greentic.provider-extension.v1:
     kind: greentic.provider-extension.v1
     version: 0.4.34
@@ -83,6 +92,18 @@ extensions:
             component_ref: messaging-provider-telegram
             export: schema-core-api
             world: greentic:provider/schema-core@1.0.0
+
+  messaging.provider_flow_hints:
+    kind: messaging.provider_flow_hints
+    version: 0.4.34
+    inline:
+      messaging.telegram.bot:
+        default: default
+        diagnostics: diagnostics
+        remove: remove
+        setup_default: setup_default
+        update: update
+        verify_webhooks: verify_webhooks
 
   messaging.provider_ingress.v1:
     kind: messaging.provider_ingress.v1

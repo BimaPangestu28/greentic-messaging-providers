@@ -1,0 +1,40 @@
+id: default
+type: job
+start: default__config
+parameters: {}
+tags: []
+schema_version: 2
+entrypoints: {}
+nodes:
+  default__config:
+    routing: out
+    render_text:
+      msg:
+        channel: '{{ state.input.msg.channel }}'
+        correlation_id: '{{ state.input.msg.correlation_id }}'
+        id: '{{ state.input.msg.id }}'
+        message:
+          id: '{{ state.input.msg.message.id }}'
+          text: '{{ state.input.msg.message.text }}'
+        metadata: '{{ state.input.msg.metadata }}'
+        provider: messaging.webex.bot
+        reply_scope: '{{ state.input.msg.reply_scope }}'
+        session_id: '{{ state.input.msg.session_id }}'
+        tenant_id: '{{ state.input.msg.tenant_id }}'
+        text: '{{ state.input.msg.text }}'
+        user_id: '{{ state.input.msg.user_id }}'
+      output_path: text
+      template: |-
+        Provider: webex
+        Type: messaging.webex.bot
+        Default configuration:
+        - Webhook URL: (required)
+        - Bot Token: (required, secret)
+        - Default Channel/Chat ID: (optional)
+      wrap: true
+x-generated-by: greentic-messaging-packgen
+x-generated-from:
+  spec: specs/providers/webex.yaml
+  spec-hash: sha256:4bd43c6f9a6c3a76a885a56533636a6e7f46bf3475cbc82db55c1995957ee928
+  manifest-hash: sha256:71033557a600c1238cc6fa98e11a6d2defe9087e1117ef6bff900e8950c7d13e
+  schemas-hash: sha256:943cb8c04251ec569ed1ad807cbd1279384b87948005a470f439256973a40dd6

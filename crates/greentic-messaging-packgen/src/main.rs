@@ -1796,40 +1796,25 @@ fn generate_flows(
         .join("components");
     // Keep flow-local component references stable even when source packs omit staged components.
     copy_file(
-        &root.join("components/questions/questions.wasm"),
-        &generated_components_dir.join("questions/questions.wasm"),
-    )?;
-    copy_file(
-        &root.join("components/templates/templates.wasm"),
-        &generated_components_dir.join("templates/templates.wasm"),
+        &root.join("components/qa/qa.wasm"),
+        &generated_components_dir.join("qa/qa.wasm"),
     )?;
     copy_file(
         &root.join("components/provision/provision.wasm"),
         &generated_components_dir.join("provision/provision.wasm"),
     )?;
-    let templates_manifest = root.join("components/templates/component.manifest.json");
-    let questions_manifest = root.join("components/questions/component.manifest.json");
+    let qa_manifest = root.join("components/qa/component.manifest.json");
     let provision_manifest = root.join("components/provision/component.manifest.json");
 
     let generated_meta = generated_flow_metadata(
         spec_path,
-        &[
-            templates_manifest.clone(),
-            questions_manifest.clone(),
-            provision_manifest.clone(),
-        ],
+        &[qa_manifest.clone(), provision_manifest.clone()],
     )?;
 
-    let templates_manifest_inline = inline_manifest(
-        &templates_manifest,
-        answers_dir,
-        "templates.inline.manifest.json",
-    )?;
-    let questions_manifest_inline = inline_manifest(
-        &questions_manifest,
-        answers_dir,
-        "questions.inline.manifest.json",
-    )?;
+    let qa_manifest_inline = inline_manifest(&qa_manifest, answers_dir, "qa.inline.manifest.json")?;
+    // Keep aliases for backward compatibility with flow step references
+    let templates_manifest_inline = qa_manifest_inline.clone();
+    let questions_manifest_inline = qa_manifest_inline.clone();
     let provision_manifest_inline = inline_manifest(
         &provision_manifest,
         answers_dir,
@@ -1837,16 +1822,16 @@ fn generate_flows(
     )?;
 
     let templates_example_raw =
-        answers_example(&templates_manifest, "text", "templates_text", answers_dir)?;
+        answers_example(&qa_manifest, "render_text", "templates_text", answers_dir)?;
     let templates_example = merge_payload(
         templates_example_raw,
         base_templates_payload(&spec.provider.provider_type),
     );
     let questions_emit_example =
-        answers_example(&questions_manifest, "emit", "questions_emit", answers_dir)?;
+        answers_example(&qa_manifest, "describe", "questions_emit", answers_dir)?;
     let questions_validate_example = answers_example(
-        &questions_manifest,
-        "validate",
+        &qa_manifest,
+        "validate_answers",
         "questions_validate",
         answers_dir,
     )?;
@@ -1869,13 +1854,13 @@ fn generate_flows(
                     flows_dir,
                     &diagnostics,
                     "summary",
-                    "text",
+                    "render_text",
                     payload,
                     Some("out"),
                     None,
                     None,
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
                 stamp_generated_header(&diagnostics, &generated_meta)?;
             }
@@ -1893,13 +1878,13 @@ fn generate_flows(
                     flows_dir,
                     &requirements,
                     "summary",
-                    "text",
+                    "render_text",
                     payload,
                     Some("out"),
                     None,
                     None,
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
                 stamp_generated_header(&requirements, &generated_meta)?;
             }
@@ -1917,13 +1902,13 @@ fn generate_flows(
                     flows_dir,
                     &setup_default,
                     "setup_default__emit_questions",
-                    "emit",
+                    "describe",
                     emit_payload,
                     Some("out"),
                     None,
                     None,
                     &questions_manifest_inline,
-                    "../components/questions/questions.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
 
                 let collect_payload = merge_payload(
@@ -1942,7 +1927,7 @@ fn generate_flows(
                     None,
                     Some("setup_default__emit_questions"),
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
 
                 let validate_payload = merge_payload(
@@ -1956,13 +1941,13 @@ fn generate_flows(
                     flows_dir,
                     &setup_default,
                     "setup_default__validate",
-                    "validate",
+                    "validate_answers",
                     validate_payload,
                     Some("out"),
                     None,
                     Some("setup_default__collect"),
                     &questions_manifest_inline,
-                    "../components/questions/questions.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
 
                 let apply_payload = merge_payload(
@@ -2026,13 +2011,13 @@ fn generate_flows(
                         flows_dir,
                         &setup_default,
                         "setup_default__summary",
-                        "text",
+                        "render_text",
                         summary_payload,
                         Some("out"),
                         None,
                         Some("setup_default__apply"),
                         &templates_manifest_inline,
-                        "../components/templates/templates.wasm",
+                        "../components/qa/qa.wasm",
                     )?;
                     flow_update_routing(
                         &setup_default,
@@ -2071,13 +2056,13 @@ fn generate_flows(
                     flows_dir,
                     &verify,
                     "summary",
-                    "text",
+                    "render_text",
                     payload,
                     Some("out"),
                     None,
                     None,
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
                 stamp_generated_header(&verify, &generated_meta)?;
             }
@@ -2094,13 +2079,13 @@ fn generate_flows(
                     flows_dir,
                     &sync,
                     "summary",
-                    "text",
+                    "render_text",
                     payload,
                     Some("out"),
                     None,
                     None,
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
                 stamp_generated_header(&sync, &generated_meta)?;
             }
@@ -2117,13 +2102,13 @@ fn generate_flows(
                     flows_dir,
                     &rotate,
                     "summary",
-                    "text",
+                    "render_text",
                     payload,
                     Some("out"),
                     None,
                     None,
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
                 stamp_generated_header(&rotate, &generated_meta)?;
             }
@@ -2145,13 +2130,13 @@ fn generate_flows(
                     flows_dir,
                     &update,
                     "update__emit_questions",
-                    "emit",
+                    "describe",
                     emit_payload,
                     Some("out"),
                     None,
                     None,
                     &questions_manifest_inline,
-                    "../components/questions/questions.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
 
                 // Step 2: Collect inputs (interactive or from state.input.answers_json)
@@ -2171,7 +2156,7 @@ fn generate_flows(
                     None,
                     Some("update__emit_questions"),
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
 
                 // Step 3: Validate answers
@@ -2186,13 +2171,13 @@ fn generate_flows(
                     flows_dir,
                     &update,
                     "update__validate",
-                    "validate",
+                    "validate_answers",
                     validate_payload,
                     Some("out"),
                     None,
                     Some("update__collect"),
                     &questions_manifest_inline,
-                    "../components/questions/questions.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
 
                 // Step 4: Apply changes with idempotent actions
@@ -2252,7 +2237,7 @@ fn generate_flows(
                     None,
                     Some("update__apply"),
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
 
                 // Wire up the routing
@@ -2285,7 +2270,7 @@ fn generate_flows(
                     None,
                     None,
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
 
                 // Step 2: Apply removal with idempotent actions
@@ -2353,7 +2338,7 @@ fn generate_flows(
                     None,
                     Some("remove__apply"),
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
 
                 // Wire up the routing
@@ -2381,13 +2366,13 @@ fn generate_flows(
                     flows_dir,
                     &default_flow,
                     "default__config",
-                    "text",
+                    "render_text",
                     payload,
                     Some("out"),
                     None,
                     None,
                     &templates_manifest_inline,
-                    "../components/templates/templates.wasm",
+                    "../components/qa/qa.wasm",
                 )?;
                 stamp_generated_header(&default_flow, &generated_meta)?;
             }
@@ -2408,6 +2393,14 @@ fn inline_manifest(manifest_path: &Path, out_dir: &Path, name: &str) -> Result<P
         .with_context(|| format!("reading {}", manifest_path.display()))?;
     let mut manifest: serde_json::Value =
         serde_json::from_str(&contents).context("parsing manifest json")?;
+    // Inline top-level config_schema $ref if present
+    if let Some(cs) = manifest.get("config_schema") {
+        let inlined = inline_schema(cs, base_dir)?;
+        manifest
+            .as_object_mut()
+            .unwrap()
+            .insert("config_schema".to_string(), inlined);
+    }
     if let Some(ops) = manifest
         .get_mut("operations")
         .and_then(|v| v.as_array_mut())
@@ -2905,23 +2898,20 @@ fn stage_components(
     let root = workspace_root()?;
     let provision_src = root.join("components/provision/provision.wasm");
     let provision_manifest = root.join("components/provision/component.manifest.json");
-    let questions_src = root.join("components/questions/questions.wasm");
-    let questions_manifest = root.join("components/questions/component.manifest.json");
-    let templates_src = root.join("components/templates/templates.wasm");
-    let templates_manifest = root.join("components/templates/component.manifest.json");
+    let qa_src = root.join("components/qa/qa.wasm");
+    let qa_manifest = root.join("components/qa/component.manifest.json");
 
-    let mut needs_templates = false;
-    let mut needs_questions = false;
+    let mut needs_qa = false;
     let mut needs_provision = false;
     for flow in flows {
         match flow.as_str() {
-            "setup_default" => {
-                needs_templates = true;
-                needs_questions = true;
+            "setup_default" | "update" => {
+                needs_qa = true;
                 needs_provision = true;
             }
-            "diagnostics" | "requirements" => {
-                needs_templates = true;
+            "diagnostics" | "requirements" | "default" | "verify_webhooks"
+            | "sync_subscriptions" | "rotate_credentials" | "remove" => {
+                needs_qa = true;
             }
             _ => {}
         }
@@ -2939,29 +2929,11 @@ fn stage_components(
             &provision_dir.join("schemas"),
         )?;
     }
-    if needs_questions {
-        let questions_dir = components_dir.join("questions");
-        copy_file(&questions_src, &questions_dir.join("questions.wasm"))?;
-        write_inline_manifest(
-            &questions_manifest,
-            &questions_dir.join("component.manifest.json"),
-        )?;
-        copy_dir_if_exists(
-            &root.join("components/questions/schemas"),
-            &questions_dir.join("schemas"),
-        )?;
-    }
-    if needs_templates {
-        let templates_dir = components_dir.join("templates");
-        copy_file(&templates_src, &templates_dir.join("templates.wasm"))?;
-        write_inline_manifest(
-            &templates_manifest,
-            &templates_dir.join("component.manifest.json"),
-        )?;
-        copy_dir_if_exists(
-            &root.join("components/templates/schemas"),
-            &templates_dir.join("schemas"),
-        )?;
+    if needs_qa {
+        let qa_dir = components_dir.join("qa");
+        copy_file(&qa_src, &qa_dir.join("qa.wasm"))?;
+        write_inline_manifest(&qa_manifest, &qa_dir.join("component.manifest.json"))?;
+        copy_dir_if_exists(&root.join("components/qa/schemas"), &qa_dir.join("schemas"))?;
     }
 
     stage_component(components_dir, spec_path, &spec.components.adapter)?;
@@ -2986,6 +2958,23 @@ fn stage_component(
     let component_ref = component.component_ref.as_str();
     if let Some(local_path) = component_ref.strip_prefix("local:") {
         let src_path = resolve_local_path(spec_dir, local_path)?;
+        // Fallback to target/components/ when the local path doesn't exist yet
+        // (e.g. before sync_packs has staged built artifacts into pack dirs).
+        let src_path = if src_path.exists() {
+            src_path
+        } else {
+            let wasm_name = src_path
+                .file_name()
+                .map(|n| n.to_string_lossy().to_string())
+                .unwrap_or_default();
+            let root = workspace_root()?;
+            let fallback = root.join("target/components").join(&wasm_name);
+            if fallback.exists() {
+                fallback
+            } else {
+                src_path // will produce original error via copy_file
+            }
+        };
         copy_file(&src_path, &dest_dir.join(format!("{component_id}.wasm")))?;
         let manifest_path = component
             .manifest

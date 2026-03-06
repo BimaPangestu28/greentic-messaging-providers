@@ -2,16 +2,16 @@
   "schema_version": 1,
   "flow": "requirements.ygtc",
   "nodes": {
-    "check_config": {
-      "component_id": "messaging-provider-dummy",
+    "summary": {
+      "component_id": "ai.greentic.component-qa",
       "source": {
         "kind": "local",
-        "path": "../components/messaging-provider-dummy/component.wasm"
+        "path": "../components/qa/qa.wasm"
       },
-      "digest": "sha256:98c4e3bf5ddde8164e58dbb3a6b574f584c747dfd1cfb61e53aafd2b546d1692",
+      "digest": "sha256:d0b9dc48122d081250bf8bb1cf06a309995c318ac9b0b3e6804ce8fd3639d655",
       "manifest": {
-        "world": "greentic:component/component-v0-v6-v0@0.6.1",
-        "version": "0.4.34"
+        "world": "greentic:component/component@0.5.0",
+        "version": "0.4.1"
       }
     }
   }

@@ -2,16 +2,64 @@
   "schema_version": 1,
   "flow": "setup_default.ygtc",
   "nodes": {
-    "configure": {
-      "component_id": "messaging-provider-telegram",
+    "setup_default__apply": {
+      "component_id": "ai.greentic.component-provision",
       "source": {
         "kind": "local",
-        "path": "../components/messaging-provider-telegram/component.wasm"
+        "path": "../components/provision/provision.wasm"
       },
-      "digest": "sha256:3041f1bcc3dbe5230933e30da67af0d91c59a8da1b3bfce3af0eae564567fd2c",
+      "digest": "sha256:1975e0d548d9e63842e2c9d0555a3a76e16bcf1545ea6cf74d9ec7ab529f5341",
       "manifest": {
-        "world": "greentic:component/component-v0-v6-v0@0.6.1",
-        "version": "0.4.34"
+        "world": "greentic:component/component@0.5.0",
+        "version": "0.1.0"
+      }
+    },
+    "setup_default__collect": {
+      "component_id": "ai.greentic.component-qa",
+      "source": {
+        "kind": "local",
+        "path": "../components/qa/qa.wasm"
+      },
+      "digest": "sha256:d0b9dc48122d081250bf8bb1cf06a309995c318ac9b0b3e6804ce8fd3639d655",
+      "manifest": {
+        "world": "greentic:component/component@0.5.0",
+        "version": "0.4.1"
+      }
+    },
+    "setup_default__emit_questions": {
+      "component_id": "ai.greentic.component-qa",
+      "source": {
+        "kind": "local",
+        "path": "../components/qa/qa.wasm"
+      },
+      "digest": "sha256:d0b9dc48122d081250bf8bb1cf06a309995c318ac9b0b3e6804ce8fd3639d655",
+      "manifest": {
+        "world": "greentic:component/component@0.5.0",
+        "version": "0.4.1"
+      }
+    },
+    "setup_default__summary": {
+      "component_id": "ai.greentic.component-qa",
+      "source": {
+        "kind": "local",
+        "path": "../components/qa/qa.wasm"
+      },
+      "digest": "sha256:d0b9dc48122d081250bf8bb1cf06a309995c318ac9b0b3e6804ce8fd3639d655",
+      "manifest": {
+        "world": "greentic:component/component@0.5.0",
+        "version": "0.4.1"
+      }
+    },
+    "setup_default__validate": {
+      "component_id": "ai.greentic.component-qa",
+      "source": {
+        "kind": "local",
+        "path": "../components/qa/qa.wasm"
+      },
+      "digest": "sha256:d0b9dc48122d081250bf8bb1cf06a309995c318ac9b0b3e6804ce8fd3639d655",
+      "manifest": {
+        "world": "greentic:component/component@0.5.0",
+        "version": "0.4.1"
       }
     }
   }

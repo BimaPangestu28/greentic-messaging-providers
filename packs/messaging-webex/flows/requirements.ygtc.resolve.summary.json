@@ -2,16 +2,16 @@
   "schema_version": 1,
   "flow": "requirements.ygtc",
   "nodes": {
-    "check_config": {
-      "component_id": "messaging-provider-webex",
+    "summary": {
+      "component_id": "ai.greentic.component-qa",
       "source": {
         "kind": "local",
-        "path": "../components/messaging-provider-webex/component.wasm"
+        "path": "../components/qa/qa.wasm"
       },
-      "digest": "sha256:475b90b2eeede6784496d740b5a7487cd0246c3e620860862d48d419f4396d8a",
+      "digest": "sha256:d0b9dc48122d081250bf8bb1cf06a309995c318ac9b0b3e6804ce8fd3639d655",
       "manifest": {
-        "world": "greentic:component/component-v0-v6-v0@0.6.1",
-        "version": "0.4.34"
+        "world": "greentic:component/component@0.5.0",
+        "version": "0.4.1"
       }
     }
   }

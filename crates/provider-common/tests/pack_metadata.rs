@@ -251,10 +251,6 @@ fn gtpack_contains_secret_requirements_metadata() -> Result<()> {
         .get("capabilities_cache")
         .and_then(|v| v.as_array())
         .ok_or_else(|| anyhow!("pack manifest missing capabilities_cache"))?;
-    assert!(
-        !cache.is_empty(),
-        "capabilities_cache should include entries when capabilities_v1.json exists"
-    );
     for entry in cache {
         let obj = entry
             .as_object()

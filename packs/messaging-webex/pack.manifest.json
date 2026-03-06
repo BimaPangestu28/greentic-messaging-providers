@@ -1,11 +1,5 @@
 {
-  "capabilities_cache": [
-    {
-      "component": "ai.greentic.component-templates",
-      "version": "v1",
-      "path": "components/ai.greentic.component-templates-capabilities_v1.json"
-    }
-  ],
+  "capabilities_cache": [],
   "component_sources": [
     {
       "id": "ai.greentic.component-provision",
