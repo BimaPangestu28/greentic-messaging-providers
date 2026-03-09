@@ -180,13 +180,17 @@ pub(crate) fn ingest_http(input_json: &[u8]) -> Vec<u8> {
                     text
                 };
                 let mut envelope = build_webchat_envelope(effective_text, user, conv_id.clone(), None);
-                // Store AC action routing hints in metadata for card navigation.
+                // Forward ALL Action.Submit data fields to metadata so the
+                // operator can handle MCP actions, token saves, card routing, etc.
                 if let Some(val) = action_value {
-                    if let Some(route_card) = val.get("routeToCardId").and_then(|s| s.as_str()) {
-                        envelope.metadata.insert("routeToCardId".to_string(), route_card.to_string());
-                    }
-                    if let Some(to_card) = val.get("toCardId").and_then(|s| s.as_str()) {
-                        envelope.metadata.insert("toCardId".to_string(), to_card.to_string());
+                    if let Some(obj) = val.as_object() {
+                        for (k, v) in obj {
+                            let s = match v {
+                                Value::String(s) => s.clone(),
+                                _ => v.to_string(),
+                            };
+                            envelope.metadata.insert(k.clone(), s);
+                        }
                     }
                 }
                 out.events.push(envelope);

@@ -703,6 +703,16 @@ pub(crate) fn handle_webhook_event(body: &Value, cfg: &ProviderConfig) -> Ingest
         if !card_id.is_empty() {
             metadata.insert("cardId".into(), card_id);
         }
+        // Forward ALL input fields to metadata for MCP routing
+        if let Some(obj) = inputs.as_object() {
+            for (k, v) in obj {
+                let s = match v {
+                    Value::String(s) => s.clone(),
+                    _ => v.to_string(),
+                };
+                metadata.insert(k.clone(), s);
+            }
+        }
         metadata.insert(
             "webex.actionInputs".into(),
             serde_json::to_string(&inputs).unwrap_or_default(),
