@@ -314,7 +314,7 @@ pub(crate) fn ingest_http(input_json: &[u8]) -> Vec<u8> {
         }
 
         // Try to parse action value as JSON for routeToCardId.
-        let (route_to_card, card_id, action_text) =
+        let (_route_to_card, _card_id, action_text) =
             if let Ok(val) = serde_json::from_str::<Value>(action_value_str) {
                 let rtc = val
                     .get("routeToCardId")
