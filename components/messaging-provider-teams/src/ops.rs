@@ -504,6 +504,16 @@ pub(crate) fn ingest_http(input_json: &[u8]) -> Vec<u8> {
         if !card_id.is_empty() {
             envelope.metadata.insert("cardId".into(), card_id);
         }
+        // Forward ALL action_data fields to metadata for MCP routing
+        if let Some(obj) = action_data.as_object() {
+            for (k, v) in obj {
+                let s = match v {
+                    Value::String(s) => s.clone(),
+                    _ => v.to_string(),
+                };
+                envelope.metadata.insert(k.clone(), s);
+            }
+        }
         envelope.metadata.insert(
             "teams.actionData".into(),
             serde_json::to_string(&action_data).unwrap_or_default(),
@@ -652,7 +662,8 @@ pub(crate) fn send_payload(input_json: &[u8]) -> Vec<u8> {
             return send_payload_error(&format!("invalid send_payload input: {err}"), false);
         }
     };
-    if send_in.provider_type != PROVIDER_TYPE {
+    // Accept both messaging.teams.bot and messaging.teams.graph (manifest.cbor mismatch).
+    if !send_in.provider_type.starts_with("messaging.teams") {
         return send_payload_error("provider type mismatch", false);
     }
     let payload_bytes = match STANDARD.decode(&send_in.payload.body_b64) {
